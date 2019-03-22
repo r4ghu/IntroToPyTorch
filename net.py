@@ -37,7 +37,7 @@ class Net(object):
 
         # If continue_train, load the pre-trained model
         if self.args.continue_train:
-            self._load_model()
+            self.load_model()
 
         # If multiple GPUs are available, automatically include DataParallel
         if self.args.multi_gpu and torch.cuda.device_count() > 1:
@@ -91,6 +91,9 @@ class Net(object):
         for epoch in range(1, self.args.epochs + 1):
             self._train_epoch(epoch)
             self.test()
+        # Save the model finally
+        if args.save_model:
+            net.save_model()
 
     def save_model(self):
         if not os.path.exists(self.args.checkpoint_dir):
@@ -98,18 +101,21 @@ class Net(object):
         model_filename = self.args.checkpoint_dir + 'model-{}-{}.pth'.format(self.args.data_name, self.args.iter_count)
         torch.save(self.model.state_dict(), model_filename)
     
-    def _load_model(self):
+    def load_model(self, iter_count=None):
         if not os.path.exists(self.args.checkpoint_dir):
             print('Checkpoint Directory does not exist. Starting training from epoch 0.')
             return
         # Find the most recent model file
-        model_files = glob.glob(self.args.checkpoint_dir + '*.pth')
-        if len(model_files) == 0:
-            print('No model checkpoint files found.')
-            return
-        model_prefix = self.args.checkpoint_dir + 'model-{}-'.format(self.args.data_name)
-        iter_numbers = [int(x[len(model_prefix):-4]) for x in model_files]
-        self.args.iter_count = max(iter_numbers)
+        if iter_count is None:
+            model_files = glob.glob(self.args.checkpoint_dir + '*.pth')
+            if len(model_files) == 0:
+                print('No model checkpoint files found.')
+                return
+            model_prefix = self.args.checkpoint_dir + 'model-{}-'.format(self.args.data_name)
+            iter_numbers = [int(x[len(model_prefix):-4]) for x in model_files]
+            self.args.iter_count = max(iter_numbers)
+        else:
+            self.args.iter_count = iter_count
         
         model_filename = self.args.checkpoint_dir + 'model-{}-{}.pth'.format(self.args.data_name, self.args.iter_count)
         self.model.load_state_dict(torch.load(model_filename))

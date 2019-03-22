@@ -3,6 +3,10 @@ from net import Net
 
 parser = argparse.ArgumentParser(description='Arguments for training/testing usig PyTorch')
 
+# Phase
+parser.add_argument('--phase', type=str, default='test',
+                    help='Phase of the model: train/test')
+
 # Model Training Params
 parser.add_argument('--train_batch_size', type=int, default=64,
                     help='Input batch size for training data (default: 64)')
@@ -47,10 +51,14 @@ parser.add_argument('--data_name', type=str, default='MNIST',
 
 def main(args):
     net = Net(args)
-    net.train()
 
-    if args.save_model:
-        net.save_model()
+    if args.phase == 'train':
+        net.train()
+    if args.phase == 'test':
+        # Load the latest model
+        net.load_model()
+        net.test()    
+
 
 if __name__=='__main__':         
     args, _ = parser.parse_known_args()
