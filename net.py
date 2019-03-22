@@ -1,5 +1,6 @@
 import os
 from loaders import *
+import torch.optim as optim
 
 class Net(object):
     def __init__(self, args):
