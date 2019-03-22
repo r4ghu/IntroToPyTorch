@@ -37,8 +37,9 @@ class Net(object):
         self.model = _model_loader.model
 
         # If continue_train, load the pre-trained model
-        if self.args.continue_train:
-            self.load_model()
+        if args.phase == 'train':
+            if self.args.continue_train:
+                self.load_model()
 
         # If multiple GPUs are available, automatically include DataParallel
         if self.args.multi_gpu and torch.cuda.device_count() > 1:
