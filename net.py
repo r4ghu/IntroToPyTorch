@@ -92,8 +92,8 @@ class Net(object):
 
         test_loss /= len(self.test_loader.dataset)
 
-        self.writer.add_scalar('test/loss', test_loss, self.iter_count)
-        self.writer.add_scalar('test/accuracy', 100. * correct / len(self.test_loader.dataset), self.iter_count)
+        self.writer.add_scalar('test/loss', test_loss, self.args.iter_count)
+        self.writer.add_scalar('test/accuracy', 100. * correct / len(self.test_loader.dataset), self.args.iter_count)
         print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, correct, len(self.test_loader.dataset),
             100. * correct / len(self.test_loader.dataset)))
