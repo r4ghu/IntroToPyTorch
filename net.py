@@ -37,7 +37,7 @@ class Net(object):
         self.model = _model_loader.model
 
         # If continue_train, load the pre-trained model
-        if args.phase == 'train':
+        if self.args.phase == 'train':
             if self.args.continue_train:
                 self.load_model()
 
