@@ -37,7 +37,6 @@ class Net(object):
         if self.args.continue_train:
             self._load_model()
 
-
         # If multiple GPUs are available, automatically include DataParallel
         if self.args.multi_gpu and torch.cuda.device_count() > 1:
             self.model = nn.DataParallel(self.model)
@@ -95,5 +94,9 @@ class Net(object):
         torch.save(self.model.state_dict(), model_filename)
     
     def _load_model(self):
+        if not os.path.exists(self.args.checkpoint_dir):
+            print('Checkpoint Directory does not exist. Starting training from epoch 0.')
+            return
+        # Find the most recent model file
         model_filename = self.args.checkpoint_dir + 'model.pth'
         self.model.load_state_dict(torch.load(model_filename))
