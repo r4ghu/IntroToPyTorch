@@ -11,14 +11,14 @@ class DataLoader:
             self.loadMNIST(args)
     
     def loadMNIST(self, args):
-        self.train_loader = torch.utils.data.DataLoader(datasets.MNIST('../data', 
+        self.train_loader = torch.utils.data.DataLoader(datasets.MNIST(args.data_dir, 
                                                         train=True, download=True,
                                                         transform=transforms.Compose([
                                                         transforms.ToTensor(),
                                                         transforms.Normalize((0.1307,), (0.3081,))
-                                                        ])), batch_size=args.batch_size, shuffle=True, **self.kwargs)
+                                                        ])), batch_size=args.train_batch_size, shuffle=True, **self.kwargs)
         
-        self.test_loader = torch.utils.data.DataLoader(datasets.MNIST('../data', 
+        self.test_loader = torch.utils.data.DataLoader(datasets.MNIST(args.data_dir, 
                                                         train=False, 
                                                         transform=transforms.Compose([
                                                         transforms.ToTensor(),

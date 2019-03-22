@@ -31,8 +31,11 @@ parser.add_argument('--seed', type=int, default=1,
 # Params to save and load models
 parser.add_argument('--save-model', action='store_true', default=True,
                     help='For Saving the current Model')
-parser.add_argument('--checkpoint_dir', type=str, default='../ckpt/',
+parser.add_argument('--checkpoint_dir', type=str, default='./ckpt/',
                     help='Directory to save models')
+# Params to save and load datasets
+parser.add_argument('--data_dir', type=str, default='./data/',
+                    help='Deirectory to save datasets')
 # Param to load specific data and DL model
 parser.add_argument('--data_name', type=str, default='MNIST',
                     help='Dataset to load and perform training/inference')
