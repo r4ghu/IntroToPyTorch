@@ -1,3 +1,4 @@
+import os
 from loaders import *
 
 class Net(object):
