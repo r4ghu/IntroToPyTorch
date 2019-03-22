@@ -71,7 +71,7 @@ class Net(object):
 
             if batch_idx % self.args.log_interval == 0:
                 # Add the values to Summary Writer
-                self.writer.add_scalar('train/loss', loss.item(), self.iter_count)
+                self.writer.add_scalar('train/loss', loss.item(), self.args.iter_count)
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                     epoch, batch_idx * len(data), len(self.train_loader.dataset),
                     100. * batch_idx / len(self.train_loader), loss.item()))
