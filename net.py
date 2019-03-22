@@ -55,6 +55,7 @@ class Net(object):
     def _train_epoch(self, epoch):
         self.model.train()
         for batch_idx, (data, target) in enumerate(self.train_loader):
+            self.args.iter_count += 1
             data, target = data.to(self.device), target.to(self.device)
             self.optimizer.zero_grad()
             output = self.model(data)
@@ -65,6 +66,8 @@ class Net(object):
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                     epoch, batch_idx * len(data), len(self.train_loader.dataset),
                     100. * batch_idx / len(self.train_loader), loss.item()))
+            if self.args.iter_count % self.args.save_frequency == 0:
+                self.save_model()
     
     def test(self):
         self.model.eval()
@@ -92,7 +95,7 @@ class Net(object):
     def save_model(self):
         if not os.path.exists(self.args.checkpoint_dir):
             os.makedirs(self.args.checkpoint_dir)
-        model_filename = self.args.checkpoint_dir + 'model.pth'
+        model_filename = self.args.checkpoint_dir + 'model-{}-{}.pth'.format(self.args.data_name, self.args.iter_count)
         torch.save(self.model.state_dict(), model_filename)
     
     def _load_model(self):
@@ -100,5 +103,13 @@ class Net(object):
             print('Checkpoint Directory does not exist. Starting training from epoch 0.')
             return
         # Find the most recent model file
-        model_filename = self.args.checkpoint_dir + 'model.pth'
+        model_files = glob.glob(self.args.checkpoint_dir + '*.pth')
+        if len(model_files) == 0:
+            print('No model checkpoint files found.')
+            return
+        model_prefix = self.args.checkpoint_dir + 'model-{}-'.format(self.args.data_name)
+        iter_numbers = [int(x[len(model_prefix):-4]) for x in model_files]
+        self.args.iter_count = max(iter_numbers)
+        
+        model_filename = self.args.checkpoint_dir + 'model-{}-{}.pth'.format(self.args.data_name, self.args.iter_count)
         self.model.load_state_dict(torch.load(model_filename))

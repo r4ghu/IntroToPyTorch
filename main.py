@@ -12,6 +12,8 @@ parser.add_argument('--log-interval', type=int, default=10,
                     help='How many batches to wait before logging training status')
 parser.add_argument('--continue_train', type=bool, default=True,
                     help='Continue training of the model')
+parser.add_argument('--iter_count', type=int, default=0,
+                    help='Number of training iterations used before training the model.')
 # Model Testing Params
 parser.add_argument('--test_batch_size', type=int, default=1000,
                     help='Input batch size for testing (default: 1000)')
@@ -31,6 +33,8 @@ parser.add_argument('--seed', type=int, default=1,
 # Params to save and load models
 parser.add_argument('--save-model', action='store_true', default=True,
                     help='For Saving the current Model')
+parser.add_argument('--save_frequency', type=int, default=1000,
+                    help='Frequency to save model.')
 parser.add_argument('--checkpoint_dir', type=str, default='./ckpt/',
                     help='Directory to save models')
 # Params to save and load datasets
