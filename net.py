@@ -2,6 +2,7 @@ import os
 import glob
 from loaders import *
 import torch.optim as optim
+from tensorboardX import SummaryWriter
 
 class Net(object):
     def __init__(self, args):
@@ -29,6 +30,9 @@ class Net(object):
         print('Build optimizer...', end='')
         self._build_optimizer()
         print('DONE')
+
+        # Setup summary writer
+        self.writer = SummaryWriter('runs/{}'.format(self.args.data_name))
 
     
     def _build_model(self):
@@ -64,7 +68,10 @@ class Net(object):
             loss = F.nll_loss(output, target)
             loss.backward()
             self.optimizer.step()
+
             if batch_idx % self.args.log_interval == 0:
+                # Add the values to Summary Writer
+                self.writer.add_scalar('train/loss', loss.item(), self.iter_count)
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                     epoch, batch_idx * len(data), len(self.train_loader.dataset),
                     100. * batch_idx / len(self.train_loader), loss.item()))
@@ -85,6 +92,8 @@ class Net(object):
 
         test_loss /= len(self.test_loader.dataset)
 
+        self.writer.add_scalar('test/loss', test_loss, self.iter_count)
+        self.writer.add_scalar('test/accuracy', 100. * correct / len(self.test_loader.dataset), self.iter_count)
         print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, correct, len(self.test_loader.dataset),
             100. * correct / len(self.test_loader.dataset)))
