@@ -1,4 +1,5 @@
 import argparse
+from net import Net
 
 parser = argparse.ArgumentParser(description='Arguments for training/testing usig PyTorch')
 
@@ -38,7 +39,11 @@ parser.add_argument('--data_name', type=str, default='MNIST',
 
 
 def main(args):
-    print(args)
+    net = Net(args)
+    net.train()
+
+    if args.save_model:
+        net.save_model()
 
 if __name__=='__main__':         
     args, _ = parser.parse_known_args()
