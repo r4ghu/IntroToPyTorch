@@ -103,8 +103,8 @@ class Net(object):
             self._train_epoch(epoch)
             self.test()
         # Save the model finally
-        if args.save_model:
-            net.save_model()
+        if self.args.save_model:
+            self.save_model()
 
     def save_model(self):
         if not os.path.exists(self.args.checkpoint_dir):
