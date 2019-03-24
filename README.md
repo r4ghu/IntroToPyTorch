@@ -1,6 +1,6 @@
 # Intro To PyTorch
 
-This is the implementation of CIFAR-10 classification using PyTorch.
+This is the implementation of basic MNIST classification using PyTorch.
 
 
 ## Requirements
