@@ -8,25 +8,32 @@ This is the implementation of CIFAR-10 classification using PyTorch.
 - OS/VM of your choice
 - Anaconda
 
-## Usage
-
-*** Coming Soon ***
-
 ## Environment 
 
-*** Coming Soon ***
+Setup your Anaconda Environment using the following commands -
+```
+$ conda create -n oml python=3.6
+$ conda activate oml
+(oml) $ conda install pytorch torchvision -c pytorch
+(oml) $ conda install tensorflow-gpu
+(oml) $ conda install tensorboardX
+```
 
-## Pretrained Model Download
+## Usage
 
-*** Coming Soon ***
+After successfully setting up environment, you can run the code by - 
+```
+tensorboard --logdir=./runs/ --host 0.0.0.0 --port 6007 & python main.py --phase train --continue_train 0
+```
+Now click here to visualize the results - [http://localhost:6007](http://localhost:6007)
 
 ## Tutorial
-
-*** Coming Soon ***
+A detailed tutorial about the contents covered in this repo can found at - [LINK](https://sriraghu.com/2019/03/23/intro-to-pytorch/)
 
 ## Results
 
-*** Coming Soon ***
+Here are the final TensorBoard Results - 
+
 
 ## Author
 
