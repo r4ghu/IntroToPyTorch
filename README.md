@@ -32,7 +32,7 @@ A detailed tutorial about the contents covered in this repo can found at - [LINK
 
 ## Results
 
-Here are the final TensorBoard Results - 
+Here are the final TensorBoard Results - ![TensorBoardX](https://github.com/r4ghu/IntroToPyTorch/blob/master/content/IntroToPyTorch-TensorboardX.png)
 
 
 ## Author
