@@ -28,7 +28,7 @@ tensorboard --logdir=./runs/ --host 0.0.0.0 --port 6007 & python main.py --phase
 Now click here to visualize the results - [http://localhost:6007](http://localhost:6007)
 
 ## Tutorial
-A detailed tutorial about the contents covered in this repo can found at - [LINK](https://sriraghu.com/2019/03/23/intro-to-pytorch/)
+A detailed tutorial about the contents covered in this repo can found at - [LINK](https://sriraghu.com/deeplearning/intro-to-pytorch/)
 
 ## Results
 
